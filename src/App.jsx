@@ -1,25 +1,30 @@
 import './App.css';
-// redux imports
-import { Provider } from 'react-redux';
-import store from './redux/store.js';
-// router imports
-import { BrowserRouter, Routes, Route } from 'react-router';
 // ant design imports
 import { Button } from 'antd';
 
 // component imports
-import Home from './pages/Home';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import ProtectedRoutes from './pages/ProtectedRoutes.jsx';
+import Login from './pages/Login.jsx';
+import Home from './pages/Home.jsx';
+import Details from './pages/Details.jsx';
+import PublicRoutes from './pages/PublicRoutes.jsx';
 
 function App() {
 
   return(
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Home />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PublicRoutes />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<ProtectedRoutes  />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/details/:id" element={<Details />} />
+          <Route path="*" element={<div>404 Not Found</div>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

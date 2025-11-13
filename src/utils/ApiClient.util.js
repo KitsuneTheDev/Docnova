@@ -3,17 +3,17 @@ export default class ApiClient {
         this.baseURL = baseURL;        
     }
 
-    async post(endpoint, body) {
+    async post(endpoint, body, token) {
         if(!body) {
             console.error("A body is required for the post request.");
             return;
         } else {
-            const response = await this.#send(endpoint, "POST", body);
+            const response = await this.#send(endpoint, "POST", body, token);
             return response;
         }   
     }
 
-    async #send(endpoint, method, body=null) {
+    async #send(endpoint, method, body = null, token = null) {
         const options = {
             method,
             headers: {},
@@ -22,6 +22,10 @@ export default class ApiClient {
         if(body !== null) {
             options.headers["Content-Type"] = "application/json";
             options.body = JSON.stringify(body);
+        }
+
+        if(token) {
+            options.headers['R-Auth'] = token;
         }
 
         try {
