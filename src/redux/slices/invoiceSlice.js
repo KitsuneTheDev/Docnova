@@ -20,11 +20,14 @@ export const fetchInvoices = createAsyncThunk(
             }
 
             console.log(token);
+            console.log(userState.user.companies[0].id);
 
             const bodyWithId = {
                 ...body,
                 companyId: userState.user?.companies[0]?.id,
             };
+
+            console.log("bodyWithId -->", bodyWithId);
 
             const response = await getInvoices(bodyWithId, token);
             if(response.error) {
