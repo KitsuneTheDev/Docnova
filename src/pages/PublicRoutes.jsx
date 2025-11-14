@@ -6,7 +6,7 @@ export default function PublicRoutes() {
     console.log("Inside public route. isAuth -->", isAuth);
 
     if(isAuth) {
-        return <Navigate to="/" replace />
+        return <Navigate to="/invoices" replace />
     } else {
         return <Outlet />
     }

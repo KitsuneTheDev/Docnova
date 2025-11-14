@@ -1,10 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getInvoices } from "../../api/invoice.api.js";
 
+const getLocalInvoices = () => {
+    const local = localStorage.getItem('invoices');
+    return local ? JSON.parse(local) : null;
+}
+
 const initialState = {
     loading: false,
     error: null,
-    invoices: null,
+    invoices: getLocalInvoices(),
 }
 
 export const fetchInvoices = createAsyncThunk(
@@ -57,6 +62,7 @@ export const invoiceSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.invoices = action.payload;
+            localStorage.setItem('invoices', JSON.stringify(action.payload));
         });
     }
 });
