@@ -1,16 +1,60 @@
-# React + Vite
+# DocNova
+DocNova, Vite + React + JavaScript ile yapılmış fatura listeleme uygulaması.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Kullanılan Teknolojiler
+* React
+* JavaScript
+* Vite
+* Redux Toolkit
+* Ant-Design
+* i18next
+* React Router
+* dayjs
 
-Currently, two official plugins are available:
+## Özellikler
+* Fatura listesi ve detay görüntüleme
+* Fetch ile API iletişimi
+* Redux Toolkit ile state yönetimi
+* i18next ile çoklu dil desteği
+* Ant-Design ile responsive tasarım
+* Route koruması
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Gereksinimler:
 
-## React Compiler
+* Node.js
+* npm veya yarn
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Kurulum:
 
-## Expanding the ESLint configuration
+```
+git clone <repository-url>
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Extra
+* Cors için proxy ayarınızı vite.config.js içinde aşağıdaki gibi yapın.
+```
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://api-dev.docnova.ai",
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        configure: (proxy) => proxy.on("proxyReq", (req) => req.removeHeader("origin")),
+      }
+    }
+  }
+})
+```
+
+## Demo:
+![image](/img/loginEn.png)
+![image](/img/loginTr.png)
+![image](/img/homeTr.png)
+![image](/img/homeEn.png)
+![image](/img/detailsTr.png)
+![image](/img/detailsEn.png)
