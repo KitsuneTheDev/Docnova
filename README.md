@@ -52,9 +52,9 @@ export default defineConfig({
 ```
 
 ## Demo:
-![image](img/loginEn.png)
-![image](/img/loginTr.png)
-![image](/img/homeTr.png)
-![image](/img/homeEn.png)
-![image](/img/detailsTr.png)
-![image](/img/detailsEn.png)
+![image](public/img/loginEn.png)
+![image](public/img/loginTr.png)
+![image](public/img/homeTr.png)
+![image](public/img/homeEn.png)
+![image](public/img/detailsTr.png)
+![image](public/img/detailsEn.png)
