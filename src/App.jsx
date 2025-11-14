@@ -17,8 +17,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<PublicRoutes />}>
+        <Route element={<AppLayout />}>
           <Route path='/' element={<Login />} />
           <Route path="/login" element={<Login />} />
+        </Route>
         </Route>
         <Route element={<ProtectedRoutes  />}>
           <Route element={<AppLayout />}>

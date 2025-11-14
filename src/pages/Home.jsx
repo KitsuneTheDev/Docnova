@@ -5,10 +5,14 @@ import { fetchInvoices } from "../redux/slices/invoiceSlice";
 import dayjs from "dayjs";
 import dayOfYear from "dayjs/plugin/dayOfYear";
 import { Table, Spin, Alert, Card, Tag, Typography } from 'antd';
+import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
 export default function Home() {
+
+    // t: translate function, i18n: language translation object
+    const { t, i18n } = useTranslation();
 
     // POST BODY PART START
     dayjs.extend(dayOfYear);
@@ -53,27 +57,27 @@ export default function Home() {
     // TABLE DEFINITION START
     const columns = [
         {
-            title: 'Fatura Numarası',
+            title: t('tableHeaders.invoiceNumber'),
             dataIndex: 'invoiceNumber',
             key: 'invoiceNumber',
             align: 'center',
             render: (text) => <strong>{text}</strong>
         },
         {
-            title: 'Tedarikçi',
+            title: t('tableHeaders.supplier'),
             dataIndex: 'supplierName',
             key: 'supplierName',
             align: 'center',
         },
         {
-            title: 'Tarih',
+            title: t('tableHeaders.date'),
             dataIndex: 'issueDate',
             key: 'issueDate',
             align: 'center',
             render: (date) => dayjs(date).format('ddd / DD.MM.YYYY') 
         },
         {
-            title: 'Tutar (EUR)',
+            title: `${t('tableHeaders.amount')} (EUR)`,
             dataIndex: 'payableAmount',
             key: 'payableAmount',
             align: 'center',
@@ -81,23 +85,23 @@ export default function Home() {
             render: (payableAmount, record) => payableAmount ? `${parseFloat(payableAmount).toFixed(2)} ${record.currency}` : '-'
         },
         {
-            title: 'Ödeme Durumu',
+            title: t('tableHeaders.paymentStatus'),
             dataIndex: 'paymentDetails',
             key: 'paymentStatus',
             align: 'center',
             render: (details) => {
-                const status = details?.paymentStatus || 'BEKLEMEDE';
-                const color = status === 'SENT' ? 'success' : status === 'PENDING' ? 'warning' : 'default';
+                const status = details?.paymentStatus || t('tableHeaders.paymentPending');
+                const color = status === 'SENT' ? 'success' : (status === t('tableHeaders.paymentPending')) ? 'warning' : 'default';
                 return <Tag color={color} >{status}</Tag>
             }
         },
         {
-            title: 'Detay',
+            title: t('tableHeaders.details'),
             key: 'action',
             align: 'center',
             render: (text, record) => {
                 return(
-                    <a onClick={() => navigate(`/details/${record.id}`)} >Detay</a>
+                    <a onClick={() => navigate(`/details/${record.id}`)} >{t('tableHeaders.details')}</a>
                 );
             }
         }
@@ -105,24 +109,24 @@ export default function Home() {
     // TABLE DEFINITION END
     if(loading) {
         return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Spin size="large" tip="Faturalar Yükleniyor..." style={{display: 'block', margin: '32px auto'}} />
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Spin size="large" tip={t('invoiceLoading')} style={{display: 'block', margin: '32px auto'}} />
             </div>
         );
     }
 
     if(invoices?.invoices.content.length === 0 || !invoices) {
         return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Card title='Fatura Listesi' style={{ margin: '24px' }} >
-                    <Alert message='Bilgi' description='Görüntülenecek fatura kaydı bulunamadı.' type="info" showIcon />
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Card title={t('invoiceListTitle')} style={{ margin: '24px' }} >
+                    <Alert message={t('alertInfo')} description={t('noData')} type="info" showIcon />
                 </Card>
             </div>
         )
     }
 
     return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Table
                     columns={columns}
                     dataSource={invoices.invoices.content}

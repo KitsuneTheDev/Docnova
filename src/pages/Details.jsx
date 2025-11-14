@@ -3,10 +3,13 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { Alert, Card, Descriptions, Spin, Typography, Tag, Divider } from "antd";
 import dayjs from "dayjs";
+import { useTranslation } from "react-i18next";
 
 const { Title, Text } = Typography;
 
 export default function Details() {
+
+    const { t, i18n } = useTranslation();
 
     const [invoice, setInvoice] = useState({});
     // redux variables
@@ -34,24 +37,24 @@ export default function Details() {
     console.log("invoice -->", invoice);
     if(loading) {
         return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Spin size="large" tip="Faturalar Yükleniyor..." style={{display: 'block', margin: '32px auto'}} />
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Spin size="large" tip={t('loadingInvoices')} style={{display: 'block', margin: '32px auto'}} />
             </div>
         );
     }
 
     if(error) {
           return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Alert message="Hata" description={`Veri hatası: ${error}`} type='error' showIcon style={{ margin: '32px' }} />
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Alert message={t('errorTitle')} description={`${t('dataError')}: ${error}`} type='error' showIcon style={{ margin: '32px' }} />
             </div>
         );      
     }
 
     if(!invoice) {
           return(
-            <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Alert message="Fatura Bulunamadı" description={`ID: ${id} iel eşleşen fatura kaydı bulunamadı.`} type='warning' showIcon style={{ margin: '32px' }} />
+            <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Alert message={t('invoiceNotFound')} description={`ID: ${id} ${t('invoiceNotFoundDetails')}`} type='warning' showIcon style={{ margin: '32px' }} />
             </div>
         );      
     }
@@ -62,66 +65,66 @@ export default function Details() {
     };
 
     return(
-        <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Card
-                title={<Title level={3} style={{ margin: '16px' }} >Fatura Detayları: {invoice.invoiceNumber || invoice.id}</Title>}
+                title={<Title level={3} style={{ margin: '16px' }} >{t('invoiceDetailsTitle')}: {invoice.invoiceNumber || invoice.id}</Title>}
             >
-                <Divider orientation="left" ><Title level={4}>Genel Bilgiler</Title></Divider>
+                <Divider orientation="left" ><Title level={4}>{t('detailsHeaders.generalTitle')}</Title></Divider>
 
                 <Descriptions bordered column={{ xs: 1, sm: 2, lg: 3 }} size="middle">
-                    <Descriptions.Item label="Fatura Numarası">
+                    <Descriptions.Item label={t('detailsHeaders.invoiceNumber')}>
                         <Text strong >{invoice.invoiceNumber}</Text>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Durum">
+                    <Descriptions.Item label={t('detailsHeaders.status')}>
                         {statusTag(invoice.status)}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tür">
+                    <Descriptions.Item label={t('detailsHeaders.type')}>
                         {invoice.documentType}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Düzenlenme Tarihi">
+                    <Descriptions.Item label={t('detailsHeaders.issueDate')}>
                         {dayjs(invoice.issueDate).format('ddd - DD/MM/YYYY')}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Vade Tarihi">
+                    <Descriptions.Item label={t('detailsHeaders.dueDate')}>
                         {invoice.dueDate ? dayjs(invoice.dueDate).format('ddd - DD/MM/YYYY') : '-'}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Oluşturulma Tarihi">
+                    <Descriptions.Item label={t('detailsHeaders.createdDate')}>
                         {dayjs(invoice.createdTime).format('ddd - DD/MM/YYYY')}
                     </Descriptions.Item>
                 </Descriptions>
 
-                <Divider orientation="left" ><Title level={4}>Mali Bilgiler</Title></Divider>
+                <Divider orientation="left" ><Title level={4}>{t('detailsHeaders.financialTitle')}</Title></Divider>
 
                 <Descriptions bordered column={3} size="middle">
-                    <Descriptions.Item label="Toplam Tutar">
+                    <Descriptions.Item label={t('detailsHeaders.totalAmount')}>
                         <Text strong>{`${parseFloat(invoice.paymentDetails?.totalAmount).toFixed(2)} ${invoice.currency}`}</Text>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Ödenecek Tutar">
+                    <Descriptions.Item label={t('detailsHeaders.payableAmount')}>
                         <Text strong type="success">{`${parseFloat(invoice.payableAmount).toFixed(2)} ${invoice.currency}`}</Text>
                     </Descriptions.Item>
-                    <Descriptions.Item label="Vergi Hariç Tutar">
+                    <Descriptions.Item label={t('detailsHeaders.taxExc')}>
                         {`${parseFloat(invoice.taxExclusiveAmount).toFixed(2)} ${invoice.currency}`}
                     </Descriptions.Item>
                     
-                    <Descriptions.Item label="Ödeme Durumu" span={3}>
+                    <Descriptions.Item label={t('detailsHeaders.paymentStatus')} span={3}>
                         <Tag color={invoice.paymentDetails?.paymentStatus === 'SENT' ? 'success' : 'processing'}>
-                            {invoice.paymentDetails?.paymentStatus || 'BEKLİYOR'}
+                            {invoice.paymentDetails?.paymentStatus || t('tableHeaders.paymentPending')}
                         </Tag>
                     </Descriptions.Item>
                 </Descriptions>
 
-                <Divider orientation="left"><Title level={4}>Taraf Bilgileri</Title></Divider>
+                <Divider orientation="left"><Title level={4}>{t('detailsHeaders.supplierTitle')}</Title></Divider>
                 
                 <Descriptions bordered column={2} size="middle">
-                    <Descriptions.Item label="Tedarikçi Adı (Biz)">
+                    <Descriptions.Item label={t('detailsHeaders.supplierName')}>
                         {invoice.supplierName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Müşteri Adı">
+                    <Descriptions.Item label={t('detailsHeaders.customerName')}>
                         {invoice.customerName}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Tedarikçi Ülke Kodu">
+                    <Descriptions.Item label={t('detailsHeaders.supplierCountry')}>
                         {invoice.supplierCountryCode || '-'}
                     </Descriptions.Item>
-                    <Descriptions.Item label="Müşteri Ülke Kodu">
+                    <Descriptions.Item label={t('detailsHeaders.customerCountry')}>
                         {invoice.customerCountryCode || '-'}
                     </Descriptions.Item>
                 </Descriptions>

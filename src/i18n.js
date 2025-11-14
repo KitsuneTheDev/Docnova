@@ -11,6 +11,10 @@ const resources = {
             "loading": "Yükleniyor...",
             "errorTitle": "Hata",
             "backToList": "Fatura Listesi",
+            "invoiceMenuLabel": "Faturalar",
+            "logoutMessage": "Çıkış yapılıyor.",
+            "logoutButtonLabel": "Çıkış Yap",
+            "dataError": "Veri Hatası",
 
             // Home
             "invoiceListTitle": "Fatura Listesi",
@@ -21,7 +25,10 @@ const resources = {
                 "amount": "Tutar",
                 "paymentStatus": "Ödeme Durumu",
                 "details": "Detaylar",
+                "paymentPending": "BEKLEMEDE",
             },
+            "invoiceLoading": "Faturalar yükleniyor...",
+            "alertInfo": "Bilgi",
             "noData": "Görüntülenecek kayıt bulunamadı.",
 
             // Login
@@ -31,6 +38,33 @@ const resources = {
             "loginButton": "Giriş Yap",
             "requiredEmail": "Geçerli e-posta giriniz.",
             "requiredPassword": "Geçerli şifre giriniz.",
+            "loginMessage": "Giriş Yapılıyor...",
+            "loginErrorMessage": "Login Error",
+
+            // Details
+            "loadingInvoices": "Faturalar Yükleniyor...",
+            "invoiceDetailsTitle": "Fatura Detayları",
+            "invoiceNotFound": "Fatura Bulunamadı.",
+            "invoiceNotFoundDetails": "ile eşleşen fatura kaydı bulunamadı.",
+            "detailsHeaders": {
+                "generalTitle": "Genel Bilgiler",
+                "invoiceNumber": "Fatura Numarası",
+                "status": "Durum",
+                "type": "Tür",
+                "issueDate": "Düzenlenme Tarihi",
+                "dueDate": "Vade Tarihi",
+                "createdDate": "Oluşturulma Tarihi",
+                "financialTitle": "Mali Bilgiler",
+                "totalAmount": "Toplam Tutar",
+                "payableAmount": "Ödenecek Tutar",
+                "taxExc": "Vergi Hariç Tutar",
+                "paymentStatus": "Ödeme Durumu",
+                "supplierTitle": "Taraf Bilgileri",
+                "supplierName": "Tedarikçi İsmi",
+                "customerName": "Müşteri İsmi",
+                "supplierCountry": "Tedarikçi Ülke Kodu",
+                "customerCountry": "Müşteri Ülke Kodu",
+            }
         }
     },
     en: {
@@ -41,6 +75,10 @@ const resources = {
             "loading": "Loading...",
             "errorTitle": "Error",
             "backToList": "Invoice List",
+            "invoiceMenuLabel": "Invoices",
+            "logoutMessage": "Loggin out.",
+            "logoutButtonLabel": "Logout",
+            "dataError": "Data Error",
 
             // Home
             "invoiceListTitle": "Invoice List",
@@ -51,7 +89,10 @@ const resources = {
                 "amount": "Amount",
                 "paymentStatus": "Payment Status",
                 "details": "Details",
+                "paymentPending": "PENDING",
             },
+            "invoiceLoading": "Loading Invoices...",
+            "alertInfo": "Info",
             "noData": "No record to display.",
 
             // Login
@@ -60,7 +101,34 @@ const resources = {
             "passwordPlaceholder": "Password",
             "loginButton": "Login",
             "requiredEmail": "Enter a valid e-mail.",
-            "requiredPassword": "Enter a valid password.",   
+            "requiredPassword": "Enter a valid password.",
+            "loginMessage": "Logging in...",
+            "loginErrorMessage": "Login Error",
+
+            // Details
+            "loadingInvoices": "Loading Invoices...",
+            "invoiceDetailsTitle": "Invoice Details",
+            "invoiceNotFound": "Invoice Not Found.",
+            "invoiceNotFoundDetails": "did not match with any invoice record.",
+            "detailsHeaders": {
+                "generalTitle": "General Details",
+                "invoiceNumber": "Invoice Number",
+                "status": "Status",
+                "type": "Type",
+                "issueDate": "Issue Date",
+                "dueDate": "Due Date",
+                "createdDate": "Created Time",
+                "financialTitle": "Financial Details",
+                "totalAmount": "Total Amount",
+                "payableAmount": "Payable Amount",
+                "taxExc": "Tax Excluded Amount",
+                "paymentStatus": "Payment Status",
+                "supplierTitle": "Party Details",
+                "supplierName": "Supplier Name",
+                "customerName": "Customer Name",
+                "supplierCountry": "Supplier Country Code",
+                "customerCountry": "Customer Country Code",
+            }
         }
     },
 };
@@ -69,6 +137,9 @@ i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
+        react: {
+            useSuspense: false,
+        },
         resources,
         lng: "tr",
         fallbackLng: "en",
