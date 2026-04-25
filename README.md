@@ -1,7 +1,7 @@
 # DocNova
-DocNova, Vite + React + JavaScript ile yapılmış fatura listeleme uygulaması.
+App for listing bills. Built by Vite, React, JS
 
-## Kullanılan Teknolojiler
+## Tech Stack
 * React
 * JavaScript
 * Vite
@@ -11,21 +11,19 @@ DocNova, Vite + React + JavaScript ile yapılmış fatura listeleme uygulaması.
 * React Router
 * dayjs
 
-## Özellikler
-* Fatura listesi ve detay görüntüleme
-* Fetch ile API iletişimi
-* Redux Toolkit ile state yönetimi
-* i18next ile çoklu dil desteği
-* Ant-Design ile responsive tasarım
-* Route koruması
+## Features
+* Bill list and detail page
+* REST API integration
+* Global state management via Redux
+* Multiple language suppor via i18next
+* Responsive design by using Ant-Design
+* Route protection
 
-## Gereksinimler:
-
+## Requirements
 * Node.js
 * npm veya yarn
 
-## Kurulum:
-
+## Installation
 ```
 git clone <repository-url>
 npm install
@@ -33,7 +31,7 @@ npm run dev
 ```
 
 ## Extra
-* Cors için proxy ayarınızı vite.config.js içinde aşağıdaki gibi yapın.
+* Please update vite.config.js file as following for CORS
 ```
 export default defineConfig({
   plugins: [react()],
